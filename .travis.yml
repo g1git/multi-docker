@@ -1,0 +1,24 @@
+language: generic
+sudo: required
+services: 
+ - docker
+
+before_install:
+ - docker build -t g1git/react-test -f ./client/Dockerfile.dev .
+
+script:
+ - docker run -e CI=true g1git/docker-react npm test
+ 
+after_success:
+ - docker build -t g1git/multi-client -f ./client/ 
+ - docker build -t g1git/multi-server -f ./server/ 
+ - docker build -t g1git/multi-worker -f ./worker/ 
+ - docker build -t g1git/multi-nginx -f ./nginx/ 
+ 
+ # login into docker
+ - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+ # push build to dockerhu
+ - docker push g1git/multi-client
+ - docker push g1git/multi-server
+ - docker push g1git/multi-worker
+ - docker push g1git/multi-nginx
