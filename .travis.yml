@@ -22,3 +22,15 @@ after_success:
  - docker push g1git/multi-server
  - docker push g1git/multi-worker
  - docker push g1git/multi-nginx
+
+deploy:
+ provider: elasticbeanstalk
+ region: "us-east-2"
+ app: "multi-docker"
+ env: "MultiDocker-env"
+ bucket_name: "elasticbeanstalk-us-east-2-326198890687"
+ bucket_path: "multi-docker"
+ on:
+   branch: master
+ access_key_id:  $AWS_ACCESS_KEY
+ secret_access_key: $AWS_SECRET_KEY
