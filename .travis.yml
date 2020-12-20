@@ -10,18 +10,18 @@ script:
  - docker run -e CI=true g1git/react-test npm test
  
 after_success:
- - docker build -t g1git/multi-client  ./client 
- - docker build -t g1git/multi-server  ./server 
- - docker build -t g1git/multi-worker  ./worker 
- - docker build -t g1git/multi-nginx  ./nginx 
+ - docker build -t g1hubdoc/multi-client  ./client 
+ - docker build -t g1hubdoc/multi-server  ./server 
+ - docker build -t g1hubdoc/multi-worker  ./worker 
+ - docker build -t g1hubdoc/multi-nginx  ./nginx 
  
  # login into docker
  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
  # push build to dockerhu
- - docker push g1git/multi-client
- - docker push g1git/multi-server
- - docker push g1git/multi-worker
- - docker push g1git/multi-nginx
+ - docker push g1hubdoc/multi-client
+ - docker push g1hubdoc/multi-server
+ - docker push g1hubdoc/multi-worker
+ - docker push g1hubdoc/multi-nginx
 
 deploy:
  provider: elasticbeanstalk
